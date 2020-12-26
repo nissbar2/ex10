@@ -4,6 +4,7 @@ import tkinter.messagebox
 
 from turtle import *
 
+
 class ShapesMaster:
     ASTEROID_BASE_SHAPE = "asteroid%d"
     SHIP_SHAPE = "ship"

@@ -3,7 +3,11 @@ import sys
 
 DEFAULT_ASTEROIDS_NUM = 5
 
-
+"""
+אמורה לייצר את האובייקטים השונים של המשחק
+להכיל מימוש שלה אינטרקציות השונות ביניהן ולדאוג לרצף פעילות התקין של המשחק
+ניתן להוסיף פונקציות
+"""
 class GameRunner:
 
     def __init__(self, asteroids_amount):
