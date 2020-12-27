@@ -318,7 +318,7 @@ class Screen:
         torpedo_obj = self._get_torpedo_object()
         self._torpedos[ id(torpedo) ] = torpedo_obj
 
-    def draw_ship(self,x,y, heading):
+    def draw_ship(self, x, y, heading):
         """
         Draw the ship at the given coordinates with the given heading
 
