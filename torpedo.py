@@ -16,6 +16,7 @@ class Torpedo:
         self.__y = y
         self.__y_speed = y_speed
         self.__heading = heading
+        self.__radius = 4
 
     def get_x(self):
         return self.__x
@@ -46,3 +47,6 @@ class Torpedo:
 
     def set_heading(self, heading):
         self.__heading = heading
+
+    def radius(self):
+        return self.__radius
