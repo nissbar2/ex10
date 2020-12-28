@@ -46,4 +46,13 @@ class Asteroid:
         return self.__size
 
     def set_size(self, size):
-        self.__size= size
+        self.__size = size
+
+    def radius(self):
+        return self.__size * 10 - 5
+
+    def has_intersection(self, obj):
+        distance = ((obj.get_x() - self.__x) ** 2 + (obj.get_y() - self.__y) ** 2) ** 0.5
+        if distance <= self.radius() + obj.radius():
+            return True
+        return False

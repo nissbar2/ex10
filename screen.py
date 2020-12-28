@@ -302,7 +302,7 @@ class Screen:
             print("Error: Asteroid id (%d) already exists"%id(asteroid))
             sys.exit(0)
         asteroid_obj = self._get_asteroid_object(size)
-        self._asteroids[ id(asteroid) ] = asteroid_obj
+        self._asteroids[id(asteroid)] = asteroid_obj
 
 
     def register_torpedo(self, torpedo):

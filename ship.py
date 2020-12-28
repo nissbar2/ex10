@@ -5,7 +5,7 @@ class Ship:
     """
     Add class description here
     """
-    def __init__(self, x, x_speed, y, y_speed, heading):
+    def __init__(self, x, x_speed, y, y_speed, heading, lives):
         """
         A constructor for a ship object
         :param x: A float representing the ship x coordinate
@@ -18,6 +18,8 @@ class Ship:
         self.__y = y
         self.__y_speed = y_speed
         self.__heading = heading
+        self.__radius = 1
+        self.__lives = lives
 
     def get_x(self):
         return self.__x
@@ -49,3 +51,11 @@ class Ship:
     def set_heading(self, heading):
         self.__heading = heading
 
+    def radius(self):
+        return self.__radius
+
+    def get_lives(self):
+        return self.__lives
+
+    def set_lives(self, lives):
+        self.__lives = lives

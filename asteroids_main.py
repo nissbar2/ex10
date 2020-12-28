@@ -56,8 +56,13 @@ class GameRunner:
             self.create_torpedo()
             self.__screen.draw_torpedo(self.__torpedo, self.__torpedo.get_x(), self.__torpedo.get_y(),
                                        self.__torpedo.get_heading())
+        for key, value in self.asteroid_dict.items():
+            self.__screen.draw_asteroid(value, value.get_x(), value.get_y())
         self.move_asteroids()
         self.move_ship()
+        astroid_key_to_delete = self.crash()
+        if astroid_key_to_delete:
+            del self.asteroid_dict[astroid_key_to_delete]
 
     def create_ship(self):
         x = random.randint(self.min_coordinate[0], self.max_coordinate[0])
@@ -65,7 +70,7 @@ class GameRunner:
         x_speed = 0
         y_speed = 0
         heading = 0
-        return Ship(x, x_speed, y, y_speed, heading)
+        return Ship(x, x_speed, y, y_speed, heading, 3)
 
     def create_asteroid(self):
         for num in range(DEFAULT_ASTEROIDS_NUM):
@@ -85,8 +90,6 @@ class GameRunner:
             y_speed = random.choice(ASTEROID_SPEED)
             heading = self.__ship.get_heading()
             return Torpedo(x, x_speed, y, y_speed, heading)
-        # torpedo = Torpedo(x, x_speed, y, y_speed, heading)
-        # self.torpedo[Torpedo(x, x_speed, y, y_speed, heading)] = torpedo
 
     def move_function(self, obj):
         obj.set_x(self.__screen_min_x + (
@@ -112,8 +115,19 @@ class GameRunner:
 
     def move_asteroids(self):
         for key, value in self.asteroid_dict.items():
-            self.move_function(self.asteroid_dict[key])
+            self.move_function(value)
 
+    def crash(self):
+        for key, value in self.asteroid_dict.items():
+            if value.has_intersection(self.__ship):
+                if self.__ship.get_lives() == 0:
+                    self.__screen.show_message("title", "message")
+                    return
+                self.__ship.set_lives(self.__ship.get_lives() - 1)
+                self.__screen.remove_life()
+                self.__screen.show_message("title", "message")
+                self.__screen.unregister_asteroid(value)
+                return key
 
 
 def main(amount):
