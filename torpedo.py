@@ -3,7 +3,7 @@ class Torpedo:
     Add class description here
     """
 
-    def __init__(self, x, x_speed, y, y_speed, heading):
+    def __init__(self, x, y):
         """
         A constructor for a Torpedo object
         :param x: A float representing the ship x coordinate
@@ -12,10 +12,10 @@ class Torpedo:
         :param y_speed:
         """
         self.__x = x
-        self.__x_speed = x_speed
+        self.__x_speed = 0
         self.__y = y
-        self.__y_speed = y_speed
-        self.__heading = heading
+        self.__y_speed = 0
+        self.__heading = 0
         self.__radius = 4
 
     def get_x(self):

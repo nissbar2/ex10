@@ -3,7 +3,7 @@ class Asteroid:
     Add class description here
     """
 
-    def __init__(self, x, x_speed, y, y_speed, size):
+    def __init__(self, x, y, size):
         """
         A constructor for a Asteroid object
         :param name: A string representing the car's name
@@ -12,11 +12,10 @@ class Asteroid:
         :param orientation: One of either 0 (VERTICAL) or 1 (HORIZONTAL)
         """
         self.__x = x
-        self.__x_speed = x_speed
+        self.__x_speed = 0
         self.__y = y
-        self.__y_speed = y_speed
+        self.__y_speed = 0
         self.__size = size
-
 
     def get_x(self):
         return self.__x

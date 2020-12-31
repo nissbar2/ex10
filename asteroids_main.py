@@ -3,19 +3,14 @@ import random
 
 from asteroid import Asteroid
 from torpedo import Torpedo
-
 from screen import Screen
+from ship import Ship
 import sys
 
-from ship import Ship
+
 
 DEFAULT_ASTEROIDS_NUM = 5
 ASTEROID_SPEED = [-4, -3, -2, -1, 1, 2, 3, 4]
-"""
-אמורה לייצר את האובייקטים השונים של המשחק
-להכיל מימוש שלה אינטרקציות השונות ביניהן ולדאוג לרצף פעילות התקין של המשחק
-ניתן להוסיף פונקציות
-"""
 
 
 class GameRunner:
@@ -31,7 +26,8 @@ class GameRunner:
         self.max_coordinate = (self.__screen_max_x, self.__screen_max_y)
         self.min_coordinate = (self.__screen_min_x, self.__screen_min_y)
 
-        self.__ship = self.create_ship()
+        x, y = self.random_spot()
+        self.__ship = Ship(x, y, 3)
         self.asteroid_dict = {}
         self.create_asteroid()
         self.torpedo_dict = {}
@@ -92,19 +88,12 @@ class GameRunner:
         y = random.randint(self.min_coordinate[1], self.max_coordinate[1])
         return x, y
 
-    def create_ship(self):
-        x, y = self.random_spot()
-        x_speed = 0
-        y_speed = 0
-        heading = 0
-        return Ship(x, x_speed, y, y_speed, heading, 3)
-
     def create_asteroid(self, amount=DEFAULT_ASTEROIDS_NUM):
         for num in range(amount):
             x, y = self.random_spot()
-            x_speed = random.choice(ASTEROID_SPEED)
-            y_speed = random.choice(ASTEROID_SPEED)
-            asteroid = Asteroid(x, x_speed, y, y_speed, 3)
+            asteroid = Asteroid(x, y, 3)
+            asteroid.set_x_speed(random.choice(ASTEROID_SPEED))
+            asteroid.set_y_speed(random.choice(ASTEROID_SPEED))
             while asteroid.has_intersection(self.__ship):
                 asteroid.set_x(random.randint(self.min_coordinate[0], self.max_coordinate[0]))
                 asteroid.set_y(random.randint(self.min_coordinate[1], self.max_coordinate[1]))
@@ -114,10 +103,10 @@ class GameRunner:
     def create_torpedo(self):
         x = self.__ship.get_x()
         y = self.__ship.get_y()
-        x_speed = self.__ship.get_x_speed() + (2 * math.cos(math.radians(self.__ship.get_heading())))
-        y_speed = self.__ship.get_y_speed() + (2 * math.sin(math.radians(self.__ship.get_heading())))
-        heading = self.__ship.get_heading()
-        torpedo = Torpedo(x, x_speed, y, y_speed, heading)
+        torpedo = Torpedo(x, y)
+        torpedo.set_x_speed(self.__ship.get_x_speed() + (2 * math.cos(math.radians(self.__ship.get_heading()))))
+        torpedo.set_y_speed(self.__ship.get_y_speed() + (2 * math.sin(math.radians(self.__ship.get_heading()))))
+        torpedo.set_heading = self.__ship.get_heading()
         self.__screen.register_torpedo(torpedo)
         self.torpedo_dict[id(torpedo)] = torpedo
         self.torpedo_loops[id(torpedo)] = 0
@@ -192,8 +181,12 @@ class GameRunner:
             self.__screen.unregister_asteroid(asteroid)
             x, y = asteroid.get_x(), asteroid.get_y()
             x_speed, y_speed = self.get_new_speed(asteroid, torpedo)
-            asteroid1 = Asteroid(x, x_speed, y, y_speed, size)
-            asteroid2 = Asteroid(x, -x_speed, y, -y_speed, size)
+            asteroid1 = Asteroid(x, y, size)
+            asteroid1.set_x_speed(x_speed)
+            asteroid1.set_x_speed(y_speed)
+            asteroid2 = Asteroid(x, y, size)
+            asteroid2.set_x_speed(-x_speed)
+            asteroid2.set_x_speed(-y_speed)
             asteroid1.set_x(x)
             asteroid1.set_y(y)
             asteroid2.set_x(x)
